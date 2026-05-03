@@ -107,6 +107,30 @@ ActividadDeportiva* cargarDatos(const char* nombreFichero, int* nRegistros) {
     return registros;
 }
 
+void FrecuenciaDiariaActividadesOfertadas(ActividadDeportiva* registros, int nRegistros) {
+    
+}
+
+void ActividadMasPopularPorCentro(ActividadDeportiva* registros, int nRegistros) {
+
+}
+
+
+void liberarDatos(ActividadDeportiva* registros, int nRegistros) {
+    int i;
+    if (!registros) return;
+    for (i = 0; i < nRegistros; i++) {
+        free(registros[i].dia_semana);
+        free(registros[i].hora_inicio);
+        free(registros[i].hora_fin);
+        free(registros[i].actividad_base);
+        free(registros[i].modalidad);
+        free(registros[i].centro);
+        free(registros[i].tipo_actividad);
+    }
+    free(registros);
+}
+
 
 void ListarActividadesPorCentro(ActividadDeportiva* registros, int nRegistros) {
     int i;
@@ -130,28 +154,7 @@ void ListarActividadesPorCentro(ActividadDeportiva* registros, int nRegistros) {
     }
 }
 
-void FrecuenciaDiariaActividadesOfertadas(ActividadDeportiva* registros, int nRegistros) {
 
-}
-
-void ActividadMasPopularPorCentro(ActividadDeportiva* registros, int nRegistros) {
-    
-}
-
-void liberarDatos(ActividadDeportiva* registros, int nRegistros) {
-    int i;
-    if (!registros) return;
-    for (i = 0; i < nRegistros; i++) {
-        free(registros[i].dia_semana);
-        free(registros[i].hora_inicio);
-        free(registros[i].hora_fin);
-        free(registros[i].actividad_base);
-        free(registros[i].modalidad);
-        free(registros[i].centro);
-        free(registros[i].tipo_actividad);
-    }
-    free(registros);
-}
 
 int main() {
     setlocale(LC_ALL, "Spanish");
