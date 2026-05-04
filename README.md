@@ -108,10 +108,46 @@ ActividadDeportiva* cargarDatos(const char* nombreFichero, int* nRegistros) {
 }
 
 void FrecuenciaDiariaActividadesOfertadas(ActividadDeportiva* registros, int nRegistros) {
-    
+
+     int lunes = 0;
+	 int martes = 0;
+	 int miercoles = 0;
+	 int jueves = 0;
+	 int viernes = 0;
+	 int sabado = 0;
+	 int domingo = 0;
+	 
+	 for (i = 0; i < nRegistros; i++) {
+	 	if (strcmp(registros[i].dia_semana, "lunes") == 0)
+            lunes++;
+        else if (strcmp(registros[i].dia_semana, "martes") == 0)
+            martes++;
+     	else if (strcmp(registros[i].dia_semana, "miercoles") == 0)
+            miercoles++;
+        else if (strcmp(registros[i].dia_semana, "jueves") == 0)
+            jueves++;
+        else if (strcmp(registros[i].dia_semana, "viernes") == 0)
+            viernes++;
+        else if (strcmp(registros[i].dia_semana, "sabado") == 0)
+            sabado++;
+        else if (strcmp(registros[i].dia_semana, "domingo") == 0)
+            domingo++;
+    }
+	
+	printf("\n\n") 
+	printf("Frequencia diaria de ACTIVIDADES OFERTADAS: \n");
+    printf("Lunes:     %d actividades\n", lunes);
+    printf("Martes:    %d actividades\n", martes);
+    printf("Miercoles: %d actividades\n", miercoles);
+    printf("Jueves:    %d actividades\n", jueves);
+    printf("Viernes:   %d actividades\n", viernes);
+    printf("Sabado:    %d actividades\n", sabado);
+    printf("Domingo:   %d actividades\n", domingo);
+	 	
 }
 
 void ActividadMasPopularPorCentro(ActividadDeportiva* registros, int nRegistros) {
+
 
 }
 
