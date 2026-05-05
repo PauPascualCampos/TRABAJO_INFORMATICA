@@ -147,8 +147,32 @@ void FrecuenciaDiariaActividadesOfertadas(ActividadDeportiva* registros, int nRe
 }
 
 void ActividadMasPopularPorCentro(ActividadDeportiva* registros, int nRegistros) {
-
-
+	int i, j;
+	printf("\nACTIVIDAD MAS POPULAR POR CENTRO:\n");
+	for(i= 0; i< nRegistros; i++){
+		int yaprocesado = 0;
+		for(j= 0; j< i; j++){
+			if(strcmp(registros[i].centro, registros[j].centro) ==0)
+			{
+			   yaprocesado= 1;
+			   break;
+			}
+		}
+		if (!yaprocesado) {
+		int maxocupadas = -1;
+		char* actividadpopular = NULL;
+		for (j= 0; j< nRegistros; j++) {
+		if (strcmp(registros[i].centro, registros[j].centro) ==0) {
+			if (registros[j].ocupadas > maxocupadas) {
+				maxocupadas = registros[j].ocupadas;
+				actividadpopular= registros[j].actividad_base;
+				}
+			}
+		}
+		printf("- Centro: %s | Actividad más popular: %s (%d plazas ocupadas)\n",
+		registros[i].centro, actividadpopular, maxocupadas);
+		}
+	}
 }
 
 
