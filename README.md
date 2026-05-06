@@ -169,7 +169,7 @@ void ActividadMasPopularPorCentro(ActividadDeportiva* registros, int nRegistros)
 				}
 			}
 		}
-		printf("- Centro: %s | Actividad más popular: %s (%d plazas ocupadas)\n",
+		printf("- Centro: %s | Actividad mas popular: %s (%d plazas ocupadas)\n",
 		registros[i].centro, actividadpopular, maxocupadas);
 		}
 	}
