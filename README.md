@@ -108,7 +108,7 @@ ActividadDeportiva* cargarDatos(const char* nombreFichero, int* nRegistros) {
 }
 
 void FrecuenciaDiariaActividadesOfertadas(ActividadDeportiva* registros, int nRegistros) {
-
+	 int i;	
      int lunes = 0;
 	 int martes = 0;
 	 int miercoles = 0;
@@ -134,7 +134,7 @@ void FrecuenciaDiariaActividadesOfertadas(ActividadDeportiva* registros, int nRe
             domingo++;
     }
 	
-	printf("\n\n") 
+	printf("\n\n"); 
 	printf("Frequencia diaria de ACTIVIDADES OFERTADAS: \n");
     printf("Lunes:     %d actividades\n", lunes);
     printf("Martes:    %d actividades\n", martes);
@@ -173,6 +173,37 @@ void ActividadMasPopularPorCentro(ActividadDeportiva* registros, int nRegistros)
 		registros[i].centro, actividadpopular, maxocupadas);
 		}
 	}
+}
+void ActividadMenosPopularPorCentro(ActividadDeportiva* registros, int nRegistros) {
+    int i, j;
+	printf("\nACTIVIDAD MENOS POPULAR POR CENTRO:\n");
+	 	for (i = 0; i < nRegistros; i++) {
+        int yaprocesado = 0;
+
+        for (j = 0; j < i; j++) {
+            if (strcmp(registros[i].centro, registros[j].centro) == 0) {
+                yaprocesado = 1;
+                break;
+            }
+        }
+
+        if (!yaprocesado) {
+            int minocupadas = -1;
+            char* actividadmenos = NULL;
+
+            for (j = 0; j < nRegistros; j++) {
+                if (strcmp(registros[i].centro, registros[j].centro) == 0) {
+                    if (minocupadas == -1 || registros[j].ocupadas < minocupadas) {
+                        minocupadas = registros[j].ocupadas;
+                        actividadmenos = registros[j].actividad_base;
+                    }
+                }
+            }
+
+            printf("- Centro: %s | Actividad menos popular: %s (%d plazas ocupadas)\n",
+                registros[i].centro,actividadmenos, minocupadas);
+        }
+    }
 }
 
 
@@ -245,7 +276,7 @@ char continuar = 's';
       printf("1. Listado de actividades por centro deportivo\n");
       printf("2. Frecuencia diaria de las actividades ofertadas\n");
       printf("3. Identificar actividad más popular por centro deportivo\n");
-      printf("4. func4\n");
+      printf("4. Identificar actividad menos popular por centro deportivo\n");
 	  printf("5. func5\n");
  	  printf("6. func6\n");
       printf("7. func7\n");
@@ -264,6 +295,9 @@ char continuar = 's';
             case 3:
                 ActividadMasPopularPorCentro(registros,nRegistros);
                 break;
+			case 4:
+				ActividadMenosPopularPorCentro(registros,nRegistros);
+				break;
 	        case 8:
 		        liberarDatos(registros, nRegistros);
                 printf("Programa finalizado.\n");
