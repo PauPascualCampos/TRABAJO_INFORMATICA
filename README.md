@@ -337,7 +337,7 @@ void top_centros_mas_concurridos(ActividadDeportiva* registros, int n_registros)
         listado = n_centros;
     }
 
-    printf("\nTOP %d CENTROS MAS CONCURRIDOS\n", limitado);
+    printf("\nTOP %d CENTROS MAS CONCURRIDOS\n", listado);
     for (i = 0; i < listado; i++) {
         printf("%d. %s (%d plazas ocupadas)\n", i + 1, centros[i].nombre, centros[i].total_ocupadas);
     }
