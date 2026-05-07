@@ -422,6 +422,7 @@ int main() {
 char continuar = 's';
     while (continuar == 's' || continuar == 'S') {
       int opcion;
+	  printf("\n \n \n")
       printf("\n    MENU DE OPCIONES    \n");
       printf("1. Listado de actividades por centro deportivo\n");
       printf("2. Frecuencia diaria de las actividades ofertadas\n");
