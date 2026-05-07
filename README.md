@@ -282,6 +282,115 @@ void HorasMasConcurridasPorCentro(ActividadDeportiva* registros, int nRegistros)
     }
 }
 
+typedef struct {
+    
+	char nombre[200];
+	int total_ocupadas;
+	
+} ResumenCentro;
+
+void top_centros_mas_concurridos(ActividadDeportiva* registros, int n_registros) {
+    
+	int i, j;
+    int n_centros = 0;
+
+    ResumenCentro* centros = (ResumenCentro*)malloc(n_registros * sizeof(ResumenCentro));
+    if (centros == NULL) {
+        printf("Error: Memoria insuficiente.\n");
+        return;
+    }
+
+    for (i = 0; i < n_registros; i++) {
+        int encontrado = 0;
+        for (j = 0; j < n_centros; j++) {
+            if (strcmp(centros[j].nombre, registros[i].centro) == 0) {
+                centros[j].total_ocupadas += registros[i].ocupadas;
+                encontrado = 1;
+                break;
+            }
+        }
+        if (encontrado == 0) {
+            strcpy(centros[n_centros].nombre, registros[i].centro);
+            centros[n_centros].total_ocupadas = registros[i].ocupadas;
+            n_centros++;
+        }
+    }
+
+    ResumenCentro temp;
+    for (i = 0; i < n_centros - 1; i++) {
+        for (j = 0; j < n_centros - i - 1; j++) {
+            if (centros[j].total_ocupadas < centros[j+1].total_ocupadas) {
+                temp = centros[j];
+                centros[j] = centros[j +1];
+                centros[j + 1] = temp;
+            }
+        }
+    }
+
+    int listado = 10;
+    if (n_centros < 10) {
+        listado = n_centros;
+    }
+
+    printf("\nTOP %d CENTROS MAS CONCURRIDOS\n", limitado);
+    for (i = 0; i < listado; i++) {
+        printf("%d. %s (%d plazas ocupadas)\n", i + 1, centros[i].nombre, centros[i].total_ocupadas);
+    }
+
+    free(centros);
+}
+
+void top_centros_menos_concurridos(ActividadDeportiva* registros, int n_registros) {
+	
+	int i, j;
+    int n_centros = 0;
+
+    ResumenCentro* centros = (ResumenCentro*)malloc(n_registros * sizeof(ResumenCentro));
+    if (centros == NULL) {
+        printf("Error: Memoria insuficiente.\n");
+        return;
+    }
+
+    for (i = 0; i < n_registros; i++) {
+        int encontrado = 0;
+        for (j = 0; j < n_centros; j++) {
+            if (strcmp(centros[j].nombre, registros[i].centro) == 0) {
+                centros[j].total_ocupadas += registros[i].ocupadas;
+                encontrado = 1;
+                break;
+            }
+        }
+        if (encontrado == 0) {
+            strcpy(centros[n_centros].nombre, registros[i].centro);
+            centros[n_centros].total_ocupadas = registros[i].ocupadas;
+            n_centros++;
+        }
+    }
+
+    ResumenCentro temp;
+    for (i = 0; i < n_centros - 1; i++) {
+        for (j = 0; j < n_centros - i - 1; j++) {
+            if (centros[j].total_ocupadas > centros[j+1].total_ocupadas) {
+                temp = centros[j];
+                centros[j] = centros[j + 1];
+                centros[j + 1] = temp;
+            }
+        }
+    }
+
+    int listado = 10;
+    if (n_centros < 10) {
+        listado = n_centros;
+    }
+
+    printf("\nTOP %d CENTROS MENOS CONCURRIDOS\n", listado);
+    for (i = 0; i < listado; i++) {
+        printf("%d. %s (%d plazas ocupadas)\n", i + 1, centros[i].nombre, centros[i].total_ocupadas);
+    }
+
+    free(centros);
+}
+
 
 int main() {
     setlocale(LC_ALL, "Spanish");
