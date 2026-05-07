@@ -313,7 +313,7 @@ char continuar = 's';
       printf("2. Frecuencia diaria de las actividades ofertadas\n");
       printf("3. Identificar actividad más popular por centro deportivo\n");
       printf("4. Identificar actividad menos popular por centro deportivo\n");
-	  printf("5. Horas y actividad mas consurrida por dentro deportivo\n");
+	  printf("5. Actividad y hora con mas ocupacion por centro deportivo\n");
  	  printf("6. func6\n");
       printf("7. func7\n");
       printf("8. Salir\n");
