@@ -1,3 +1,11 @@
+
+
+
+
+
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -247,6 +255,42 @@ void ListarActividadesPorCentro(ActividadDeportiva* registros, int nRegistros) {
 
 
 
+void HorasMasConcurridasPorCentro(ActividadDeportiva* registros, int nRegistros) {
+    int i;
+    char centroBuscado[100];
+
+    int maxOcupadas = -1;
+    char* horaMasConcurridaInicio = NULL;
+    char* horaMasConcurridaFin = NULL;
+    char* actividad = NULL;
+
+    printf("\nIntroduce el nombre del centro deportivo: ");
+    fgets(centroBuscado, sizeof(centroBuscado), stdin);
+    centroBuscado[strcspn(centroBuscado, "\n")] = 0;
+
+    for (i = 0; i < nRegistros; i++) {
+        if (strcmp(registros[i].centro, centroBuscado) == 0) {
+
+            if (registros[i].ocupadas > maxOcupadas) {
+                maxOcupadas = registros[i].ocupadas;
+                horaMasConcurridaInicio = registros[i].hora_inicio;
+                horaMasConcurridaFin = registros[i].hora_fin;
+                actividad = registros[i].actividad_base;
+            }
+        }
+    }
+
+    if (maxOcupadas == -1) {
+        printf("No se encontro ningun registro para ese centro.\n");
+    } else {
+        printf("\nHORA MAS CONCURRIDA DEL CENTRO '%s'\n", centroBuscado);
+        printf("Hora: %s - %s\n", horaMasConcurridaInicio, horaMasConcurridaFin);
+        printf("Actividad: %s\n", actividad);
+        printf("Plazas ocupadas: %d\n", maxOcupadas);
+    }
+}
+
+
 int main() {
     setlocale(LC_ALL, "Spanish");
 
@@ -277,7 +321,7 @@ char continuar = 's';
       printf("2. Frecuencia diaria de las actividades ofertadas\n");
       printf("3. Identificar actividad más popular por centro deportivo\n");
       printf("4. Identificar actividad menos popular por centro deportivo\n");
-	  printf("5. func5\n");
+	  printf("5. Horas y actividad mas consurrida por dentro deportivo\n");
  	  printf("6. func6\n");
       printf("7. func7\n");
       printf("8. Salir\n");
@@ -298,6 +342,9 @@ char continuar = 's';
 			case 4:
 				ActividadMenosPopularPorCentro(registros,nRegistros);
 				break;
+			 case 5:
+                HorasMasConcurridasPorCentro(registros, nRegistros);
+                break;
 	        case 8:
 		        liberarDatos(registros, nRegistros);
                 printf("Programa finalizado.\n");
