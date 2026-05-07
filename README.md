@@ -147,6 +147,7 @@ void FrecuenciaDiariaActividadesOfertadas(ActividadDeportiva* registros, int nRe
 }
 
 void ActividadMasPopularPorCentro(ActividadDeportiva* registros, int nRegistros) {
+
 	int i, j;
 	printf("\nACTIVIDAD MAS POPULAR POR CENTRO:\n");
 	for(i= 0; i< nRegistros; i++){
@@ -175,6 +176,7 @@ void ActividadMasPopularPorCentro(ActividadDeportiva* registros, int nRegistros)
 	}
 }
 void ActividadMenosPopularPorCentro(ActividadDeportiva* registros, int nRegistros) {
+
     int i, j;
 	printf("\nACTIVIDAD MENOS POPULAR POR CENTRO:\n");
 	 	for (i = 0; i < nRegistros; i++) {
@@ -208,6 +210,7 @@ void ActividadMenosPopularPorCentro(ActividadDeportiva* registros, int nRegistro
 
 
 void liberarDatos(ActividadDeportiva* registros, int nRegistros) {
+
     int i;
     if (!registros) return;
     for (i = 0; i < nRegistros; i++) {
@@ -224,6 +227,7 @@ void liberarDatos(ActividadDeportiva* registros, int nRegistros) {
 
 
 void ListarActividadesPorCentro(ActividadDeportiva* registros, int nRegistros) {
+
     int i;
     char centroBuscado[100];
     printf("\nIntroduce el nombre del centro deportivo: ");
@@ -248,6 +252,7 @@ void ListarActividadesPorCentro(ActividadDeportiva* registros, int nRegistros) {
 
 
 void HorasMasConcurridasPorCentro(ActividadDeportiva* registros, int nRegistros) {
+
     int i;
     char centroBuscado[100];
 
@@ -351,9 +356,9 @@ void top_centros_menos_concurridos(ActividadDeportiva* registros, int n_registro
         return;
     }
 
-    for (i = 0; i < n_registros; i++) {
+    for (i = 0; i < n_registros; i ++) {
         int encontrado = 0;
-        for (j = 0; j < n_centros; j++) {
+        for (j = 0; j < n_centros; j ++) {
             if (strcmp(centros[j].nombre, registros[i].centro) == 0) {
                 centros[j].total_ocupadas += registros[i].ocupadas;
                 encontrado = 1;
@@ -368,8 +373,8 @@ void top_centros_menos_concurridos(ActividadDeportiva* registros, int n_registro
     }
 
     ResumenCentro temp;
-    for (i = 0; i < n_centros - 1; i++) {
-        for (j = 0; j < n_centros - i - 1; j++) {
+    for (i = 0; i < n_centros - 1; i ++) {
+        for (j = 0; j < n_centros - i - 1; j ++) {
             if (centros[j].total_ocupadas > centros[j+1].total_ocupadas) {
                 temp = centros[j];
                 centros[j] = centros[j + 1];
@@ -384,8 +389,8 @@ void top_centros_menos_concurridos(ActividadDeportiva* registros, int n_registro
     }
 
     printf("\nTOP %d CENTROS MENOS CONCURRIDOS\n", listado);
-    for (i = 0; i < listado; i++) {
-        printf("%d. %s (%d plazas ocupadas)\n", i + 1, centros[i].nombre, centros[i].total_ocupadas);
+    for (i= 0; i < listado; i++) {
+        printf("%d. %s (%d plazas ocupadas)\n", i +1, centros[i].nombre, centros[i].total_ocupadas);
     }
 
     free(centros);
@@ -423,8 +428,8 @@ char continuar = 's';
       printf("3. Identificar actividad más popular por centro deportivo\n");
       printf("4. Identificar actividad menos popular por centro deportivo\n");
 	  printf("5. Actividad y hora con mas ocupacion por centro deportivo\n");
- 	  printf("6. func6\n");
-      printf("7. func7\n");
+ 	  printf("6. Top centros mas concurridos\n");
+	  printf("7. Top centros menos concurridos\n");
       printf("8. Salir\n");
       printf("Selecciona una opcion: ");
       scanf("%d", &opcion);
@@ -446,6 +451,12 @@ char continuar = 's';
 			 case 5:
                 HorasMasConcurridasPorCentro(registros, nRegistros);
                 break;
+			case 6:
+   				top_centros_mas_concurridos(registros, nRegistros);
+    			break;
+			case 7:
+   		 		top_centros_menos_concurridos(registros, nRegistros);
+    			break;
 	        case 8:
 		        liberarDatos(registros, nRegistros);
                 printf("Programa finalizado.\n");
