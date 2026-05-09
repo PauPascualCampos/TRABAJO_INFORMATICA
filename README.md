@@ -536,6 +536,101 @@ void DiasMasConcurridosPorCentro(ActividadDeportiva* registros, int nRegistros) 
     }
 }
 
+void CentrosMasSaturados(ActividadDeportiva* registros, int nRegistros) {
+
+    int i, j;
+    int nCentros = 0;
+
+    ResumenCentro* centros = (ResumenCentro*)malloc(nRegistros * sizeof(ResumenCentro));
+    float porcentajes[1000];
+    int plazasLibres[1000];
+    int totalPlazas[1000];
+
+    if (centros == NULL) {
+        printf("Error: Memoria insuficiente.\n");
+        return;
+    }
+
+    for (i = 0; i < nRegistros; i++) {
+
+        int encontrado = 0;
+
+        for (j = 0; j < nCentros; j++) {
+
+            if (strcmp(centros[j].nombre, registros[i].centro) == 0) {
+
+                centros[j].total_ocupadas = centros[j].total_ocupadas + registros[i].ocupadas;
+                plazasLibres[j] = plazasLibres[j] + registros[i].libres;
+                totalPlazas[j] = totalPlazas[j] + registros[i].plazas;
+
+                encontrado = 1;
+                break;
+            }
+        }
+
+        if (encontrado == 0) {
+
+            strcpy(centros[nCentros].nombre, registros[i].centro);
+
+            centros[nCentros].total_ocupadas = registros[i].ocupadas;
+            plazasLibres[nCentros] = registros[i].libres;
+            totalPlazas[nCentros] = registros[i].plazas;
+
+            nCentros++;
+        }
+    }
+
+    for (i = 0; i < nCentros; i++) {
+        if (totalPlazas[i] > 0) {
+            porcentajes[i] = (centros[i].total_ocupadas * 100.0) / totalPlazas[i];
+        }
+        else {
+            porcentajes[i] = 0;
+        }
+    }
+
+    for (i = 0; i < nCentros - 1; i++) {
+        for (j = 0; j < nCentros - i - 1; j++) {
+
+            if (porcentajes[j] < porcentajes[j + 1]) {
+
+                float tempPorcentaje = porcentajes[j];
+                porcentajes[j] = porcentajes[j + 1];
+                porcentajes[j + 1] = tempPorcentaje;
+
+                int tempLibres = plazasLibres[j];
+                plazasLibres[j] = plazasLibres[j + 1];
+                plazasLibres[j + 1] = tempLibres;
+
+                int tempPlazas = totalPlazas[j];
+                totalPlazas[j] = totalPlazas[j + 1];
+                totalPlazas[j + 1] = tempPlazas;
+
+                ResumenCentro tempCentro = centros[j];
+                centros[j] = centros[j + 1];
+                centros[j + 1] = tempCentro;
+            }
+        }
+    }
+
+    printf("\nTOP 5 CENTROS MAS SATURADOS\n");
+
+    int listado = 5;
+
+    if (nCentros < 5) {
+        listado = nCentros;
+    }
+
+    for (i = 0; i < listado; i++) {
+
+        printf("%d. %s\n", i + 1, centros[i].nombre);
+        printf("   Plazas libres: %d\n", plazasLibres[i]);
+        printf("   Porcentaje de ocupacion: %.2f%%\n", porcentajes[i]);
+    }
+
+    free(centros);
+}
+
 int main() {
     setlocale(LC_ALL, "Spanish");
 
@@ -572,7 +667,7 @@ char continuar = 's';
  	  printf("6. Top centros mas concurridos\n");
 	  printf("7. Top centros menos concurridos\n");
 	  printf("8. Top 10 actividades con mas demanda\n");
-	  printf("9. Dia mas concurrido por centro deportivo\n");
+	  printf("9. Top 5 centros mas saturados\n");
 	  printf("10. Salir\n");
       printf("Selecciona una opcion: ");
       scanf("%d", &opcion);
@@ -604,7 +699,7 @@ char continuar = 's';
 				Top10ActividadesConMasDemanda(registros,nRegistros);
 				break;
 			case 9:
-				DiasMasConcurridosPorCentro(registros, nRegistros);
+				CentrosMasSaturados(registros, nRegistros);
 				break;
 	        case 10:
 		        liberarDatos(registros, nRegistros);
