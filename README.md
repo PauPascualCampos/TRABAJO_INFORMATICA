@@ -437,6 +437,105 @@ void Top10ActividadesConMasDemanda(ActividadDeportiva* registros, int nRegistros
     }
 }
 
+void DiasMasConcurridosPorCentro(ActividadDeportiva* registros, int nRegistros) {
+    
+    int i;
+    char centroBuscado[100];
+
+    int lunes = 0;
+    int martes = 0;
+    int miercoles = 0;
+    int jueves = 0;
+    int viernes = 0;
+    int sabado = 0;
+    int domingo = 0;
+
+    int maxOcupadas;
+    char* diaMasConcurrido;
+
+    printf("\nIntroduce el nombre del centro deportivo: ");
+    fgets(centroBuscado, sizeof(centroBuscado), stdin);
+    centroBuscado[strcspn(centroBuscado, "\n")] = 0;
+
+    for (i = 0; i < nRegistros; i++) {
+        if (strcmp(registros[i].centro, centroBuscado) == 0) {
+
+            if (strcmp(registros[i].dia_semana, "lunes") == 0) {
+                lunes = lunes + registros[i].ocupadas;
+            }
+            else if (strcmp(registros[i].dia_semana, "martes") == 0) {
+                martes = martes + registros[i].ocupadas;
+            }
+            else if (strcmp(registros[i].dia_semana, "miercoles") == 0) {
+                miercoles = miercoles + registros[i].ocupadas;
+            }
+            else if (strcmp(registros[i].dia_semana, "jueves") == 0) {
+                jueves = jueves + registros[i].ocupadas;
+            }
+            else if (strcmp(registros[i].dia_semana, "viernes") == 0) {
+                viernes = viernes + registros[i].ocupadas;
+            }
+            else if (strcmp(registros[i].dia_semana, "sabado") == 0) {
+                sabado = sabado + registros[i].ocupadas;
+            }
+            else if (strcmp(registros[i].dia_semana, "domingo") == 0) {
+                domingo = domingo + registros[i].ocupadas;
+            }
+        }
+    }
+
+    maxOcupadas = lunes;
+    diaMasConcurrido = "lunes";
+
+    if (martes > maxOcupadas) {
+        maxOcupadas = martes;
+        diaMasConcurrido = "martes";
+    }
+
+    if (miercoles > maxOcupadas) {
+        maxOcupadas = miercoles;
+        diaMasConcurrido = "miercoles";
+    }
+
+    if (jueves > maxOcupadas) {
+        maxOcupadas = jueves;
+        diaMasConcurrido = "jueves";
+    }
+
+    if (viernes > maxOcupadas) {
+        maxOcupadas = viernes;
+        diaMasConcurrido = "viernes";
+    }
+
+    if (sabado > maxOcupadas) {
+        maxOcupadas = sabado;
+        diaMasConcurrido = "sabado";
+    }
+
+    if (domingo > maxOcupadas) {
+        maxOcupadas = domingo;
+        diaMasConcurrido = "domingo";
+    }
+
+    if (maxOcupadas == 0) {
+        printf("No se encontro ningun registro para ese centro.\n");
+    }
+    else {
+        printf("\nDIA MAS CONCURRIDO DEL CENTRO '%s'\n", centroBuscado);
+        printf("Dia mas concurrido: %s\n", diaMasConcurrido);
+        printf("Total de plazas ocupadas ese dia: %d\n", maxOcupadas);
+
+        printf("\nResumen semanal del centro:\n");
+        printf("Lunes:     %d plazas ocupadas\n", lunes);
+        printf("Martes:    %d plazas ocupadas\n", martes);
+        printf("Miercoles: %d plazas ocupadas\n", miercoles);
+        printf("Jueves:    %d plazas ocupadas\n", jueves);
+        printf("Viernes:   %d plazas ocupadas\n", viernes);
+        printf("Sabado:    %d plazas ocupadas\n", sabado);
+        printf("Domingo:   %d plazas ocupadas\n", domingo);
+    }
+}
+
 int main() {
     setlocale(LC_ALL, "Spanish");
 
@@ -473,7 +572,8 @@ char continuar = 's';
  	  printf("6. Top centros mas concurridos\n");
 	  printf("7. Top centros menos concurridos\n");
 	  printf("8. Top 10 actividades con mas demanda\n");
-      printf("9. Salir\n");
+	  printf("9. Dia mas concurrido por centro deportivo\n");
+	  printf("10. Salir\n");
       printf("Selecciona una opcion: ");
       scanf("%d", &opcion);
       getchar();
@@ -503,7 +603,10 @@ char continuar = 's';
 			case 8:
 				Top10ActividadesConMasDemanda(registros,nRegistros);
 				break;
-	        case 9:
+			case 9:
+				DiasMasConcurridosPorCentro(registros, nRegistros);
+				break;
+	        case 10:
 		        liberarDatos(registros, nRegistros);
                 printf("Programa finalizado.\n");
                 system("pause");
