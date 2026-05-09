@@ -460,6 +460,7 @@ int main() {
 
 
 char continuar = 's';
+
     while (continuar == 's' || continuar == 'S') {
       int opcion;
 	  printf("\n \n \n");
