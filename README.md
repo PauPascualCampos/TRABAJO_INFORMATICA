@@ -395,7 +395,47 @@ void top_centros_menos_concurridos(ActividadDeportiva* registros, int n_registro
 
     free(centros);
 }
+void Top10ActividadesConMasDemanda(ActividadDeportiva* registros, int nRegistros) {
+    int i, j;
 
+    int usados[10];
+    for (i = 0; i < 10; i++) {
+        usados[i] = -1;
+    }
+
+    printf("\nTOP 10 ACTIVIDADES CON MAS DEMANDA:\n");
+
+    for (i = 0; i < 10 && i < nRegistros; i++) {
+        int maxocupadas = -1;
+        int indiceMax = -1;
+
+        for (j = 0; j < nRegistros; j++) {
+            int yaUsado = 0;
+            int k;
+
+            for (k = 0; k < i; k++) {
+                if (usados[k] == j) {
+                    yaUsado = 1;
+                    break;
+                }
+            }
+
+            if (!yaUsado && registros[j].ocupadas > maxocupadas) {
+                maxocupadas = registros[j].ocupadas;
+                indiceMax = j;
+            }
+        }
+
+        if (indiceMax != -1) {
+            usados[i] = indiceMax;
+            printf("%d. %s | Centro: %s (%d plazas ocupadas)\n",
+                   i + 1,
+                   registros[indiceMax].actividad_base,
+                   registros[indiceMax].centro,
+                   registros[indiceMax].ocupadas);
+        }
+    }
+}
 
 int main() {
     setlocale(LC_ALL, "Spanish");
@@ -422,7 +462,7 @@ int main() {
 char continuar = 's';
     while (continuar == 's' || continuar == 'S') {
       int opcion;
-	  printf("\n \n \n")
+	  printf("\n \n \n");
       printf("\n    MENU DE OPCIONES    \n");
       printf("1. Listado de actividades por centro deportivo\n");
       printf("2. Frecuencia diaria de las actividades ofertadas\n");
@@ -431,7 +471,8 @@ char continuar = 's';
 	  printf("5. Actividad y hora con mas ocupacion por centro deportivo\n");
  	  printf("6. Top centros mas concurridos\n");
 	  printf("7. Top centros menos concurridos\n");
-      printf("8. Salir\n");
+	  printf("8. Top 10 actividades con mas demanda\n");
+      printf("9. Salir\n");
       printf("Selecciona una opcion: ");
       scanf("%d", &opcion);
       getchar();
@@ -458,7 +499,10 @@ char continuar = 's';
 			case 7:
    		 		top_centros_menos_concurridos(registros, nRegistros);
     			break;
-	        case 8:
+			case 8:
+				Top10ActividadesConMasDemanda(registros,nRegistros);
+				break;
+	        case 9:
 		        liberarDatos(registros, nRegistros);
                 printf("Programa finalizado.\n");
                 system("pause");
