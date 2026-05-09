@@ -667,8 +667,9 @@ char continuar = 's';
  	  printf("6. Top centros mas concurridos\n");
 	  printf("7. Top centros menos concurridos\n");
 	  printf("8. Top 10 actividades con mas demanda\n");
-	  printf("9. Top 5 centros mas saturados\n");
-	  printf("10. Salir\n");
+	  printf("9. Dia mas concurrido por centro deportivo\n");
+	  printf("10. Top 5 centros mas saturados\n");
+	  printf("11. Salir\n");
       printf("Selecciona una opcion: ");
       scanf("%d", &opcion);
       getchar();
@@ -699,9 +700,12 @@ char continuar = 's';
 				Top10ActividadesConMasDemanda(registros,nRegistros);
 				break;
 			case 9:
+				DiasMasConcurridosPorCentro(registros, nRegistros);
+				break;
+			case 10:
 				CentrosMasSaturados(registros, nRegistros);
 				break;
-	        case 10:
+	        case 11:
 		        liberarDatos(registros, nRegistros);
                 printf("Programa finalizado.\n");
                 system("pause");
